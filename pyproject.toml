@@ -1,0 +1,36 @@
+[project]
+name = "leetcode-clone"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "alembic>=1.17.1",
+    "fastapi[standard]>=0.121.1",
+    "faststream>=0.6.3",
+    "psycopg[binary]>=3.2.12",
+    "pydantic-settings>=2.12.0",
+    "pysqlsync>=0.8.4",
+    "pytest>=9.0.0",
+    "sqlalchemy>=2.0.44",
+    "uvicorn>=0.38.0",
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.18.2",
+    "ruff>=0.14.4",
+]
+
+[tool.ruff]
+target-version = "py314"
+line-length = 88
+
+[tool.ruff.lint]
+fixable = ["ALL"]
+extend-select = ["E501"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+

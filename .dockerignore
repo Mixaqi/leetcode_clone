@@ -1,0 +1,32 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.python-version
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Git
+.git
+.gitignore
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# Docker
+docker-compose.override.yml
+
+# Test files
+tests/
+scripts/
+
+README.md
+
