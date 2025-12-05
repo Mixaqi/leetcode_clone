@@ -6,13 +6,16 @@ readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
     "alembic>=1.17.1",
+    "argon2-cffi>=25.1.0",
     "authx>=1.4.3",
+    "fastapi-cache2>=0.2.2",
     "fastapi[standard]>=0.121.1",
     "faststream>=0.6.3",
     "psycopg[binary]>=3.2.12",
     "pydantic-settings>=2.12.0",
     "pysqlsync>=0.8.4",
     "pytest>=9.0.0",
+    "redis>=7.1.0",
     "sqlalchemy>=2.0.44",
     "uvicorn>=0.38.0",
 ]
