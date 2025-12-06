@@ -1,4 +1,6 @@
-from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
+from typing import AsyncGenerator
+
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from app.core.config import settings
 
@@ -15,6 +17,11 @@ class DatabaseHelper:
             autocommit=False,
             expire_on_commit=False,
         )
+
+
+async def get_async_psql_session() -> AsyncGenerator[AsyncSession, None]:
+    async with db_helper.session_factory() as session:
+        yield session
 
 
 db_helper = DatabaseHelper(url=settings.get_database_URL, echo=settings.PG_ECHO)

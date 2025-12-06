@@ -6,27 +6,12 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
-class RedisDB(BaseModel):
-    cache: int = 0
-
-    model_config = SettingsConfigDict(env_prefix="REDIS_DB_")
-
-
 class RedisConfig(BaseModel):
     host: str = "localhost"
     port: int = 6379
-    db: RedisDB = RedisDB()
+    db: int = 0
 
     model_config = SettingsConfigDict(env_prefix="REDIS_")
-
-
-class CacheNamespace(BaseModel):
-    sessions: str = "sessions"
-
-
-class CacheConfig(BaseModel):
-    prefix: str = "fastapi-cache"
-    namespace: CacheNamespace = CacheNamespace()
 
 
 class Settings(BaseSettings):
@@ -45,7 +30,6 @@ class Settings(BaseSettings):
     PG_ECHO: bool = False
 
     redis: RedisConfig = RedisConfig()
-    cache: CacheConfig = CacheConfig()
 
     @property
     def get_database_URL(self) -> str:
