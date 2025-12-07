@@ -1,5 +1,10 @@
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.models.userBase import UserBase
+from app.schemas.auth import CreateUser
+from sqlalchemy import select
 
 ph = PasswordHasher()
 
@@ -33,3 +38,27 @@ def verify_password(password: str, hashed: str) -> bool:
         return True
     except VerifyMismatchError:
         return False
+
+
+async def create_user(db: AsyncSession, user_data: CreateUser) -> UserBase:
+    existing_username = await db.scalar(
+        select(UserBase).where(UserBase.username == user_data.username)
+    )
+    if existing_username:
+        raise ValueError("Username already exists")
+
+    existing_email = await db.scalar(
+        select(UserBase).where(UserBase.email == user_data.email)
+    )
+    if existing_email:
+        raise ValueError("Email already exists")
+
+    new_user = UserBase(
+        username=user_data.username,
+        email=user_data.email,
+        hashed_password=hash_password(user_data.hashed_password),
+    )
+    db.add(new_user)
+    await db.commit()
+    await db.refresh(new_user)
+    return new_user
