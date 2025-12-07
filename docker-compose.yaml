@@ -53,6 +53,8 @@ services:
     image: redis:8-alpine
     ports:
       - "6379:6379"
+    volumes:
+      - redis_data:/data
 
 volumes:
   postgres_data:
@@ -61,6 +63,9 @@ volumes:
     driver: local
   rabbitmq-log:
     driver: local
+  redis_data:
+    driver: local
+  
 
 configs:
   rabbitmq-plugins:

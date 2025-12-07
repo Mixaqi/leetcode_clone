@@ -1,10 +1,10 @@
+import json
 import uuid
 from datetime import datetime, timezone
 
 from redis.asyncio import Redis
 
 from app.schemas.auth import SessionData
-import json
 
 
 class SessionStorage:
@@ -26,8 +26,6 @@ class SessionStorage:
             return None
         data = json.loads(raw)
         return SessionData.model_validate(data)
-    
+
     async def delete_session(self, session_id: str) -> None:
         await self.redis.delete(f"session:{session_id}")
-
-
