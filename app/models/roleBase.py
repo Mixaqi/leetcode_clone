@@ -10,7 +10,7 @@ from app.models.base import Base
 class Role(Enum):
     USER = "user"
     STAFF = "staff"
-    SUPERUSER = "hard"
+    SUPERUSER = "admin"
 
 
 class RoleBase(Base):

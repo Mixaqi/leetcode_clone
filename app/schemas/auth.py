@@ -26,7 +26,6 @@ class UserMixin(BaseModel):
 class CreateUser(UserMixin):
     pass
 
-
 class UserSchema(UserMixin):
     id: int
     is_active: bool = True
