@@ -6,6 +6,7 @@ from app.models.userBase import UserBase
 from app.schemas.auth import CreateUser
 from sqlalchemy import select
 
+
 ph = PasswordHasher()
 
 
@@ -61,4 +62,6 @@ async def create_user(db: AsyncSession, user_data: CreateUser) -> UserBase:
     db.add(new_user)
     await db.commit()
     await db.refresh(new_user)
+
     return new_user
+

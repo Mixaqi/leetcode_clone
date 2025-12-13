@@ -2,20 +2,26 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db_helper import get_async_psql_session
-from app.models.userBase import UserBase
 from app.schemas.auth import CreateUser, UserSchema
-from app.auth.utils import create_user
+from app.auth.service import AuthService
 
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
-
 @router.post("/register", response_model=UserSchema, status_code=201)
 async def register(
-    user_data: CreateUser, db: AsyncSession = Depends(get_async_psql_session)
-) -> UserBase:
+    user_data: CreateUser,
+    db: AsyncSession = Depends(get_async_psql_session),
+) -> UserSchema:
+    auth_service = AuthService(db=db)
+
     try:
-        user = await create_user(db, user_data)
+        user = await auth_service.register_user(
+            username=user_data.username,
+            email=user_data.email,
+            password=user_data.hashed_password
+        )
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
-    return user
+    return UserSchema.model_validate(user)
+    
