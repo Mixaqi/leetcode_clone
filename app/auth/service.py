@@ -2,25 +2,18 @@ from datetime import datetime
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.auth.utils import hash_password
 from app.models.userBase import UserBase
 from app.models.loginBase import LoginBase
+from app.schemas.auth import CreateUser
+from app.auth.utils import create_user
+
 
 class AuthService:
-    def __init__ (self, db: AsyncSession):
+    def __init__(self, db: AsyncSession):
         self.db = db
 
-    async def register_user(
-        self, username: str, email: str, password: str
-    ) -> UserBase:
-
-        new_user = UserBase(
-            username=username,
-            email=email,
-            hashed_password=hash_password(password),
-            is_active=True,
-            created_at=datetime.now(),
-        )
+    async def register_user(self, user_data: CreateUser) -> UserBase:
+        new_user = await create_user(db=self.db, user_data=user_data)
         self.db.add(new_user)
         await self.db.flush()
 

@@ -10,6 +10,9 @@ class LoginBase(Base):
     __tablename__ = "logins"
     id: Mapped[int] = mapped_column(primary_key=True)
 
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id"), nullable=False
+    )
 
     last_login: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=True)
+

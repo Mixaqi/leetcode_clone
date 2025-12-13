@@ -8,6 +8,7 @@ from app.auth.service import AuthService
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
+
 @router.post("/register", response_model=UserSchema, status_code=201)
 async def register(
     user_data: CreateUser,
@@ -16,12 +17,7 @@ async def register(
     auth_service = AuthService(db=db)
 
     try:
-        user = await auth_service.register_user(
-            username=user_data.username,
-            email=user_data.email,
-            password=user_data.hashed_password
-        )
+        user = await auth_service.register_user(user_data=user_data)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     return UserSchema.model_validate(user)
-    
