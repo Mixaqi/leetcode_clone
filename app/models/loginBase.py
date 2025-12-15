@@ -11,8 +11,7 @@ class LoginBase(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
 
     user_id: Mapped[int] = mapped_column(
-        ForeignKey("users.id"), nullable=False
+        ForeignKey("users.id"), on_delete="CASCADE", nullable=False
     )
 
     last_login: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=True)
-
