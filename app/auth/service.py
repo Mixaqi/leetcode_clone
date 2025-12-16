@@ -2,10 +2,10 @@ from datetime import datetime
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.userBase import UserBase
-from app.models.loginBase import LoginBase
-from app.schemas.auth import CreateUser
 from app.auth.utils import create_user
+from app.models.loginBase import LoginBase
+from app.models.userBase import UserBase
+from app.schemas.auth import CreateUser
 
 
 class AuthService:

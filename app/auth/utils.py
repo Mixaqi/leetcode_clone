@@ -1,13 +1,12 @@
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.roleBase import RoleBase
 from app.models.userBase import UserBase
 from app.models.users_roles import UserRole
 from app.schemas.auth import CreateUser
-from sqlalchemy import select
-
 
 ph = PasswordHasher()
 
@@ -44,7 +43,6 @@ def verify_password(password: str, hashed: str) -> bool:
 
 
 async def create_user(db: AsyncSession, user_data: CreateUser) -> UserBase:
-
     existing_username = await db.scalar(
         select(UserBase).where(UserBase.username == user_data.username)
     )
@@ -71,6 +69,4 @@ async def create_user(db: AsyncSession, user_data: CreateUser) -> UserBase:
     user_role = UserRole(user_id=new_user.id, roles_id=user_role_id)
     db.add(user_role)
 
-    await db.commit()
-    await db.refresh(new_user)
     return new_user

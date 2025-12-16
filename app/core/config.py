@@ -10,8 +10,13 @@ class RedisConfig(BaseModel):
     host: str = "localhost"
     port: int = 6379
     db: int = 0
+    echo: bool = False
 
     model_config = SettingsConfigDict(env_prefix="REDIS_")
+
+    @property
+    def get_redis_url(self) -> str:
+        return f"redis://{self.host}:{self.port}/{self.db}"
 
 
 class Settings(BaseSettings):
