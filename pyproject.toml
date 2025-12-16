@@ -12,6 +12,7 @@ dependencies = [
     "fastapi[standard]>=0.121.1",
     "faststream>=0.6.3",
     "orjson>=3.11.5",
+    "pre-commit>=4.5.0",
     "psycopg[binary]>=3.2.12",
     "pydantic-settings>=2.12.0",
     "pysqlsync>=0.8.4",
