@@ -7,20 +7,20 @@ from pydantic import BaseModel, EmailStr, Field, field_validator
 class UserMixin(BaseModel):
     username: str = Field(min_length=3, max_length=40)
     email: EmailStr = Field(min_length=5)
-    hashed_password: str = Field(min_length=8, max_length=100)
+    password: str = Field(min_length=8, max_length=100)
 
-    @field_validator("hashed_password")
+    @field_validator("password")
     @classmethod
-    def password_strength(cls, hashed_password: str) -> str:
-        if len(hashed_password) < 8:
+    def password_strength(cls, password: str) -> str:
+        if len(password) < 8:
             raise ValueError("Password must be at least 8 characters")
-        if not re.search(r"[A-Z]", hashed_password):
+        if not re.search(r"[A-Z]", password):
             raise ValueError("Password must contain at least one uppercase letter")
-        if not re.search(r"[a-z]", hashed_password):
+        if not re.search(r"[a-z]", password):
             raise ValueError("Password must contain at least one lowercase letter")
-        if not re.search(r"[0-9]", hashed_password):
+        if not re.search(r"[0-9]", password):
             raise ValueError("Password must contain at least one digit")
-        return hashed_password
+        return password
 
 
 class CreateUser(UserMixin):

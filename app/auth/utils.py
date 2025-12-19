@@ -58,7 +58,7 @@ async def create_user(db: AsyncSession, user_data: CreateUser) -> UserBase:
     new_user = UserBase(
         username=user_data.username,
         email=user_data.email,
-        hashed_password=hash_password(user_data.hashed_password),
+        password=hash_password(user_data.password),
     )
     db.add(new_user)
     await db.flush()
