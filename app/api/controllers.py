@@ -1,3 +1,5 @@
+from typing import Annotated
+
 from fastapi import APIRouter, Depends, HTTPException, Response
 from redis.exceptions import ConnectionError, TimeoutError
 from sqlalchemy.exc import SQLAlchemyError
@@ -18,8 +20,8 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 async def register(
     response: Response,
     user_data: CreateUser,
-    db: AsyncSession = Depends(get_async_psql_session),
-    session_storage: SessionStorage = Depends(get_session_storage),
+    db: Annotated[AsyncSession, Depends(get_async_psql_session)],
+    session_storage: Annotated[SessionStorage, Depends(get_session_storage)],
 ) -> UserSchema:
     auth_service = AuthService(db=db)
     try:
@@ -28,19 +30,19 @@ async def register(
             session_id = await session_storage.create_session(user_id=user.id)
     except ValueError as e:
         logger.error(e)
-        raise HTTPException(status_code=400, detail=str(e))
+        raise HTTPException(status_code=400, detail=str(e)) from e
 
     except (ConnectionError, TimeoutError) as e:
         logger.error(e)
         raise HTTPException(
             status_code=503,
             detail="Session storage unavailable. Please try again later",
-        )
+        ) from e
     except SQLAlchemyError as e:
         logger.error(f"Db error during registration: {e}")
         raise HTTPException(
             status_code=503, detail="Database unavailable. Please try again later."
-        )
+        ) from e
 
     response.set_cookie(
         key="session_id",
