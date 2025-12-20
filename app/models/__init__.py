@@ -6,6 +6,7 @@ from app.models.submissionBase import SubmissionBase
 from app.models.userBase import UserBase
 from app.models.users_roles import UserRole
 
+
 __all__ = [
     "UserBase",
     "CompetitionBase",

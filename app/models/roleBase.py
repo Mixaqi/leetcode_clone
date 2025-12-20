@@ -1,7 +1,6 @@
 from enum import Enum
 
-from sqlalchemy import Enum as SqlAlchemyEnum
-from sqlalchemy import Text
+from sqlalchemy import Enum as SqlAlchemyEnum, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.models.base import Base

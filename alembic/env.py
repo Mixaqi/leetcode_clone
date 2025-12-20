@@ -10,8 +10,9 @@ from alembic import context
 from app.core.config import settings
 from app.models.base import Base
 
+
 if platform.system() == "Windows":
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+    asyncio.set_event_loop_policy(asyncio._WindowsSelectorEventLoopPolicy())
 
 
 target_metadata = Base.metadata

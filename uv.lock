@@ -580,6 +580,7 @@ dependencies = [
     { name = "fastapi", extra = ["standard"] },
     { name = "fastapi-cache2" },
     { name = "faststream" },
+    { name = "mypy" },
     { name = "orjson" },
     { name = "pre-commit" },
     { name = "psycopg", extra = ["binary"] },
@@ -587,6 +588,7 @@ dependencies = [
     { name = "pysqlsync" },
     { name = "pytest" },
     { name = "redis" },
+    { name = "ruff" },
     { name = "sqlalchemy" },
     { name = "uvicorn" },
 ]
@@ -594,6 +596,7 @@ dependencies = [
 [package.dev-dependencies]
 dev = [
     { name = "mypy" },
+    { name = "pre-commit" },
     { name = "ruff" },
 ]
 
@@ -605,6 +608,7 @@ requires-dist = [
     { name = "fastapi", extras = ["standard"], specifier = ">=0.121.1" },
     { name = "fastapi-cache2", specifier = ">=0.2.2" },
     { name = "faststream", specifier = ">=0.6.3" },
+    { name = "mypy", specifier = ">=1.18.2" },
     { name = "orjson", specifier = ">=3.11.5" },
     { name = "pre-commit", specifier = ">=4.5.0" },
     { name = "psycopg", extras = ["binary"], specifier = ">=3.2.12" },
@@ -612,6 +616,7 @@ requires-dist = [
     { name = "pysqlsync", specifier = ">=0.8.4" },
     { name = "pytest", specifier = ">=9.0.0" },
     { name = "redis", specifier = ">=7.1.0" },
+    { name = "ruff", specifier = ">=0.14.4" },
     { name = "sqlalchemy", specifier = ">=2.0.44" },
     { name = "uvicorn", specifier = ">=0.38.0" },
 ]
@@ -619,6 +624,7 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [
     { name = "mypy", specifier = ">=1.18.2" },
+    { name = "pre-commit", specifier = ">=4.5.0" },
     { name = "ruff", specifier = ">=0.14.4" },
 ]
 

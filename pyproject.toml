@@ -11,6 +11,7 @@ dependencies = [
     "fastapi-cache2>=0.2.2",
     "fastapi[standard]>=0.121.1",
     "faststream>=0.6.3",
+    "mypy>=1.18.2",
     "orjson>=3.11.5",
     "pre-commit>=4.5.0",
     "psycopg[binary]>=3.2.12",
@@ -18,6 +19,7 @@ dependencies = [
     "pysqlsync>=0.8.4",
     "pytest>=9.0.0",
     "redis>=7.1.0",
+    "ruff>=0.14.4",
     "sqlalchemy>=2.0.44",
     "uvicorn>=0.38.0",
 ]
@@ -25,6 +27,7 @@ dependencies = [
 [dependency-groups]
 dev = [
     "mypy>=1.18.2",
+    "pre-commit>=4.5.0",
     "ruff>=0.14.4",
 ]
 
@@ -33,10 +36,19 @@ target-version = "py314"
 line-length = 88
 
 [tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
 fixable = ["ALL"]
+unfixable = []
+
 extend-select = ["E501"]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+lines-after-imports = 2
 
 [tool.ruff.format]
 quote-style = "double"
+indent-style = "space"
 
 

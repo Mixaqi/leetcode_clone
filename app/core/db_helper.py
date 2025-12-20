@@ -1,4 +1,4 @@
-from typing import AsyncGenerator
+from collections.abc import AsyncGenerator
 
 from redis.asyncio import Redis, from_url
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
@@ -20,7 +20,7 @@ class DatabaseHelper:
         )
 
 
-async def get_async_psql_session() -> AsyncGenerator[AsyncSession, None]:
+async def get_async_psql_session() -> AsyncGenerator[AsyncSession]:
     async with db_helper.session_factory() as session:
         yield session
 
@@ -28,7 +28,7 @@ async def get_async_psql_session() -> AsyncGenerator[AsyncSession, None]:
 db_helper = DatabaseHelper(url=settings.get_database_URL, echo=settings.PG_ECHO)
 
 
-async def get_redis_client() -> AsyncGenerator[Redis, None]:
+async def get_redis_client() -> AsyncGenerator[Redis]:
     client = from_url(
         settings.redis.get_redis_url,
         encoding="utf-8",

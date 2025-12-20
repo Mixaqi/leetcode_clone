@@ -1,6 +1,15 @@
 import re
 from datetime import datetime
-from pydantic import BaseModel, EmailStr, Field, field_validator, model_validator, ConfigDict
+
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    EmailStr,
+    Field,
+    field_validator,
+    model_validator,
+)
+
 
 class UserSchema(BaseModel):
     id: int
@@ -11,6 +20,8 @@ class UserSchema(BaseModel):
     updated_at: datetime
 
     model_config = ConfigDict(from_attributes=True)
+
+
 class UserLogin(BaseModel):
     email: EmailStr
     password: str = Field(min_length=8, max_length=100)
@@ -28,6 +39,7 @@ class UserLogin(BaseModel):
             raise ValueError("Password must contain at least one digit")
         return v
 
+
 class CreateUser(UserLogin):
     username: str = Field(min_length=3, max_length=40)
     confirm_password: str = Field(min_length=8, max_length=100)
@@ -37,6 +49,7 @@ class CreateUser(UserLogin):
         if self.password != self.confirm_password:
             raise ValueError("Passwords do not match")
         return self
+
 
 class SessionData(BaseModel):
     user_id: int

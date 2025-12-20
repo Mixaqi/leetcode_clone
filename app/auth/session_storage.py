@@ -1,6 +1,6 @@
 import json
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from redis.asyncio import Redis
 
@@ -15,7 +15,7 @@ class SessionStorage:
     async def create_session(self, user_id: int) -> str:
         session_id = str(uuid.uuid4())
         json_data = SessionData(
-            user_id=user_id, created_at=datetime.now(timezone.utc)
+            user_id=user_id, created_at=datetime.now(UTC)
         ).model_dump_json()
         await self.redis.setex(f"session:{session_id}", self.ttl_seconds, json_data)
         return session_id
